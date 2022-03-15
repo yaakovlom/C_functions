@@ -5,6 +5,44 @@
 #define N 5
 
 // *** general ***
+void swap(int* a, int* b);
+
+// *** random ***
+void set_random_seed();
+void random_array(int* arr, int arr_len, int max);
+
+// *** arrays ***
+void print_array(int* arr, int len);
+void print_matrix(int** arr, int rows, int columns);
+void copy_array(int dist[N][N], int src[N][N]);
+//void matrix_sort_columns(int** arr, int column, int row_len, int col_len);
+void put_in_order(int* arr, int len, int input);
+void spin_array_right(int arr[][N]);
+void spin_array_left(int arr[][N]);
+
+// *** bits ***
+int set_bit(int num, int bit);
+int check_bits(int num, int bits);
+
+// *** checks ***
+int is_digit(char cha);
+int is_space(char ch);
+
+// *** strings ***
+void remove_new_line(char* str);
+char* get_string(char* str, int len);
+int str_find_digit(char string[]);
+int str_count_ch(char string[], char ch);
+int my_strchr(char string[], char ch);
+int my_strlen(char* str);
+int my_strcmp(char* str1, char* str2);
+int my_strncmp(char* str1, char* str2, int n);
+int my_strstr(char* str1, char* str2);
+char my_strpbrk(char* str, char* str2);
+
+
+
+// *** general ***
 
 void swap(int* a, int* b)
 {
@@ -106,18 +144,34 @@ int check_bits(int num, int bits)
 
 // *** checks ***
 
-//int is_digit(char cha)
-//{
-//	return (cha >= '0') && (cha <= '9');
-//}
+int is_digit(char cha)
+{
+	return (cha >= '0') && (cha <= '9');
+}
 
 int is_space(char ch)
 {
 	return (ch == '\t' || ch == ' ');
 }
 
-
 // *** strings ***
+
+void remove_new_line(char* str)
+{
+	int* end = str + my_strlen(str) - 1;
+	if (*end == '\n') *end = '\0';
+}
+
+char* get_string(char* str, int len)
+{
+	int clean;
+	str = malloc((len + 1) * sizeof(char));
+	printf("Enter string <20 chars>: ");
+	scanf("%d", &clean);
+	fgets(str, len, stdin);
+	remove_new_line(str);
+	return str;
+}
 
 int str_find_digit(char string[])
 {
@@ -147,14 +201,11 @@ int my_strchr(char string[], char ch)
 	return *string ? string : NULL;
 }
 
-int my_strlen(char string[])
+int my_strlen(char* str)
 {
 	int count = 0;
-	while (*string)
-	{
+	while (*str++)
 		count++;
-		string++;
-	}
 	return count;
 }
 

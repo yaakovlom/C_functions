@@ -3,38 +3,9 @@
 
 #define N 20
 
-int strlen(char* str) {
-	int count = 0;
-	while (*str++)
-		count++;
-	return count;
-}
-
-void remove_new_line(char* str)
-{
-	int* end = str + strlen(str) - 1;
-	if (*end == '\n') *end = '\0';
-}
-
-int is_digit(char cha)
-{
-	return (cha >= '0') && (cha <= '9');
-}
-
-char* get_string(char *str, int len)
-{
-	int clean;
-	str = malloc((len + 1) * sizeof(char));
-	printf("Enter string <20 chars>: ");
-	scanf("%d", &clean);
-	fgets(str, len, stdin);
-	remove_new_line(str);
-	return str;
-}
-
 char* zippedString(char* str)
 {
-	int len = strlen(str), zip_len = len, count = 1;
+	int len = my_strlen(str), zip_len = len, count = 1;
 
 	for (int i = 2; i < len; i++)
 		if (*(str + i) == *(str + i - 1) && *(str + i) == *(str + i - 2))
@@ -60,7 +31,7 @@ char* zippedString(char* str)
 
 char* unzipString(char* str)
 {
-	int count = 0, len = strlen(str), flag = 0;
+	int count = 0, len = my_strlen(str), flag = 0;
 	for (int i = 0; i < len; i++)
 		if (is_digit(*(str + i)))
 			count += *(str + i) - '0' - 2;
