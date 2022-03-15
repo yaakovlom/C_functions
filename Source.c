@@ -2,27 +2,45 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define N 4
+#define N 5
+
+// *** general ***
+
+void swap(int* a, int* b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+// *** random ***
+
+void set_random_seed()
+{
+	time_t t;
+	srand((unsigned)time(&t));
+}
+
+void random_array(int* arr, int arr_len, int max)
+{
+	for (int i = 0; i < arr_len; i++)
+		arr[i] = rand() % max;
+}
 
 
 // *** arrays ***
 
-void print_matrix(int* arr[N])
-{
-	for (int r = 0; r < N; r++)
-	{
-		for (int c = 0; c < N; c++)
-			printf("%d ", arr[r][c]);
-		printf("\n");
-	}
-}
-
 void print_array(int* arr, int len)
 {
-	printf("The array is: ");
 	for (int i = 0; i < len; i++)
-		printf("%d ", arr[i]);
+		printf("%3d ", arr[i]);
 	printf("\n");
+}
+
+void print_matrix(int** arr, int rows, int columns)
+{
+	for (int i = 0; i < rows; i++)
+		print_array(arr[i], columns);
 }
 
 void copy_array(int dist[N][N], int src[N][N])
@@ -32,13 +50,24 @@ void copy_array(int dist[N][N], int src[N][N])
 			dist[r][c] = src[r][c];
 }
 
-void putInOrder(int* arr, int len, int input)
+//void matrix_sort_columns(int** arr, int column, int row_len, int col_len)
+//{
+//	for (int i = 1; i < col_len; i++) {
+//		int* p = arr[column]+i;
+//		while (arr[column][i] < arr[column][i - 1]) {
+//			
+//		}
+//
+//	}
+//			
+//}
+
+void put_in_order(int* arr, int len, int input)
 {
 	int end = len - 1;
 	arr[end] = input;
 	while (arr[end - 1] > arr[end] && end) {
-		swap(arr + end, arr + end - 1);
-		end--;
+		swap(arr + end--, arr + end);
 	}
 }
 
@@ -77,10 +106,10 @@ int check_bits(int num, int bits)
 
 // *** checks ***
 
-int is_digit(char cha)
-{
-	return (cha >= '0') && (cha <= '9');
-}
+//int is_digit(char cha)
+//{
+//	return (cha >= '0') && (cha <= '9');
+//}
 
 int is_space(char ch)
 {
