@@ -16,7 +16,6 @@ void random_array(int* arr, int arr_len, int max);
 void print_array(int* arr, int len);
 void print_matrix(int** arr, int rows, int columns);
 void copy_array(int dist[N][N], int src[N][N]);
-//void matrix_sort_columns(int** arr, int column, int row_len, int col_len);
 void put_in_order(int* arr, int len, int input);
 int is_in_array(int arr[N][N], int row, int col);
 void spin_array_right(int arr[][N]);
@@ -94,16 +93,6 @@ void copy_array(int dist[N][N], int src[N][N])
 	for (int r = 0; r < N; r++)
 		for (int c = 0; c < N; c++)
 			dist[r][c] = src[r][c];
-}
-
-void matrix_sort_columns(int** arr, int column, int row_len, int col_len)
-{
-	for (int i = 1; i < col_len; i++)
-	{
-		int* p_i = arr[i] + column;
-		while (*p_i < *p_i - 1)
-			swap(*p_i, *p_i - 1);
-	}
 }
 
 void put_in_order(int* arr, int len, int input)
