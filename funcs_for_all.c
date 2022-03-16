@@ -262,3 +262,38 @@ size_t count_str_str(const char *src, const char *sub_str)
     }
     return count;
 }
+
+// Return a copy with all occurrences of substring old replaced by new
+char *replace_str(const char *src, const char *old, const char *new)
+{
+    size_t src_len = strlen(src);
+    size_t old_len = strlen(old);
+    size_t new_len = strlen(new);
+    size_t old_count = count_str_str(src, old);
+
+    char *ret = (char *)malloc((src_len - ((old_len - new_len) * old_count) + 1) * sizeof(char));
+    char *ret_p = ret;
+    char *next_strstr = strstr(src, old);
+
+    while (*src)
+    {
+        // if at start of old occurrence
+        if (src == next_strstr)
+        {
+            // insert the new sub-string
+            strncpy(ret_p, new, new_len);
+            // jump after this word
+            next_strstr = strstr(src, old);
+            src += old_len;
+            ret_p += new_len;
+        }
+        // another char
+        else
+        {
+            *ret_p++ = *src++;
+        }
+    }
+    
+    *ret_p = '\0';
+    return ret;
+}
