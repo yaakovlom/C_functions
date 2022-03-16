@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define N 20
+#define N 7
 
 char* zippedString(char* str)
 {
@@ -63,22 +63,23 @@ int main()
 	int finish = 0, res;
 
 	str = get_string(str, N);
-	printf("%s", str);
 	do
 	{
 		printf("What to do? (1=zip, 2=unzip, 3=change string, 4=finish):");
-		scanf("%d", &res);
+		flush_all();
+		scanf(" %d", &res);
 		switch (res)
 		{
 		case 1:
 			str = zippedString(str);
-			printf("%s", str);
+			printf("%s\n", str);
 			break;
 		case 2:
 			str = unzipString(str);
-			printf("%s", str);
+			printf("%s\n", str);
 			break;
 		case 3:
+			flush_all();
 			str = get_string(str, N);
 			break;
 		case 4:
@@ -92,4 +93,20 @@ int main()
 	free(str);
 	printf("Goodbye..");
 	return 0;
+}
+
+int main1()
+{
+	int **arr = malloc(N * sizeof(int*));
+	set_random_seed();
+	for (int i = 0; i < N; i++)
+	{
+		arr[i] = malloc(N * sizeof(int));
+		init_random_array(arr[i], N, 20);
+	}
+	print_matrix(arr, N, N);
+	printf("\n");
+	for (int i = 0; i < N; i++)
+		matrix_sort_columns(arr, i, N, N);
+	print_matrix(arr, N, N);
 }

@@ -6,6 +6,7 @@
 
 // *** general ***
 void swap(int* a, int* b);
+void flush_all();
 
 // *** random ***
 void set_random_seed();
@@ -17,6 +18,7 @@ void print_matrix(int** arr, int rows, int columns);
 void copy_array(int dist[N][N], int src[N][N]);
 //void matrix_sort_columns(int** arr, int column, int row_len, int col_len);
 void put_in_order(int* arr, int len, int input);
+int is_in_array(int arr[N][N], int row, int col);
 void spin_array_right(int arr[][N]);
 void spin_array_left(int arr[][N]);
 
@@ -51,6 +53,12 @@ void swap(int* a, int* b)
 	*b = temp;
 }
 
+void flush_all()
+{
+	int ch = 0;
+	while ((ch = getchar()) != EOF && ch != '\n');
+}
+
 // *** random ***
 
 void set_random_seed()
@@ -59,7 +67,7 @@ void set_random_seed()
 	srand((unsigned)time(&t));
 }
 
-void random_array(int* arr, int arr_len, int max)
+void init_random_array(int* arr, int arr_len, int max)
 {
 	for (int i = 0; i < arr_len; i++)
 		arr[i] = rand() % max;
@@ -75,10 +83,10 @@ void print_array(int* arr, int len)
 	printf("\n");
 }
 
-void print_matrix(int** arr, int rows, int columns)
+void print_matrix(int **arr, int row_len, int col_len)
 {
-	for (int i = 0; i < rows; i++)
-		print_array(arr[i], columns);
+	for (int i = 0; i < row_len; i++)
+		print_array(arr[i], col_len);
 }
 
 void copy_array(int dist[N][N], int src[N][N])
@@ -88,17 +96,15 @@ void copy_array(int dist[N][N], int src[N][N])
 			dist[r][c] = src[r][c];
 }
 
-//void matrix_sort_columns(int** arr, int column, int row_len, int col_len)
-//{
-//	for (int i = 1; i < col_len; i++) {
-//		int* p = arr[column]+i;
-//		while (arr[column][i] < arr[column][i - 1]) {
-//			
-//		}
-//
-//	}
-//			
-//}
+void matrix_sort_columns(int** arr, int column, int row_len, int col_len)
+{
+	for (int i = 1; i < col_len; i++)
+	{
+		int* p_i = arr[i] + column;
+		while (*p_i < *p_i - 1)
+			swap(*p_i, *p_i - 1);
+	}
+}
 
 void put_in_order(int* arr, int len, int input)
 {
@@ -107,6 +113,13 @@ void put_in_order(int* arr, int len, int input)
 	while (arr[end - 1] > arr[end] && end) {
 		swap(arr + end--, arr + end);
 	}
+}
+
+int is_in_array(int arr[N][N], int row, int col)
+{
+	if ((row < 0 || row >= N) || (col < 0 || col >= N))
+		return 0;
+	return 1;
 }
 
 void spin_array_right(int arr[][N])
@@ -158,17 +171,15 @@ int is_space(char ch)
 
 void remove_new_line(char* str)
 {
-	int* end = str + my_strlen(str) - 1;
+	char* end = str + my_strlen(str) - 1;
 	if (*end == '\n') *end = '\0';
 }
 
 char* get_string(char* str, int len)
 {
-	int clean;
 	str = malloc((len + 1) * sizeof(char));
-	printf("Enter string <20 chars>: ");
-	scanf("%d", &clean);
-	fgets(str, len, stdin);
+	printf("Enter string <%d chars>: ", len);
+	fgets(str, len + 1, stdin);
 	remove_new_line(str);
 	return str;
 }
