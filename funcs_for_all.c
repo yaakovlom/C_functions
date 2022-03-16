@@ -255,3 +255,19 @@ char my_strpbrk(char* str, char* str2)
 				return str[i];
 	return NULL;
 }
+
+/*
+ * Return the number of non-overlapping occurrences
+ * of substring sub_str in string src.
+ */
+size_t count_str_str(const char *src, const char *sub_str)
+{
+    size_t count = 0;
+    size_t sub_str_len = strlen(sub_str);
+    while ((src = strstr(src, sub_str)) != NULL)
+    {
+        count++;
+        src += sub_str_len;
+    }
+    return count;
+}
