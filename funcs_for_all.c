@@ -40,7 +40,9 @@ int my_strcmp(char* str1, char* str2);
 int my_strncmp(char* str1, char* str2, int n);
 int my_strstr(char* str1, char* str2);
 char my_strpbrk(char* str, char* str2);
-size_t count_str_str(const char* src, const char* sub_str);
+size_t count_str_str(const char *src, const char *sub_str);
+char *replace_str(const char *src, const char *old, const char *new);
+
 
 
 // *** general ***
