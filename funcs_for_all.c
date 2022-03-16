@@ -266,7 +266,7 @@ size_t count_str_str(const char *src, const char *sub_str)
 // Return a copy with all occurrences of substring old replaced by new
 char *replace_str(const char *src, const char *old, const char *new)
 {
-    size_t src_len = strlen(src);
+size_t src_len = strlen(src);
     size_t old_len = strlen(old);
     size_t new_len = strlen(new);
     size_t old_count = count_str_str(src, old);
