@@ -281,10 +281,12 @@ char *replace_str(const char *src, const char *old, const char *new)
         {
             // insert the new sub-string
             strncpy(ret_p, new, new_len);
-            next_strstr = strstr(src, old);
             // jump over this occurrence
             src += old_len;
-            ret_p += new_len;
+			// search for the next occurrence
+			next_strstr = strstr(src, old);
+            // move the return pointer to the end
+			ret_p += new_len;
         }
         // another char
         else
