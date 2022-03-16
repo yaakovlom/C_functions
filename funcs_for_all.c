@@ -276,23 +276,19 @@ char *replace_str(const char *src, const char *old, const char *new)
     char *next_strstr = strstr(src, old);
 
     while (*src)
-    {
         // if at start of old occurrence
         if (src == next_strstr)
         {
             // insert the new sub-string
-            strncpy(ret_p, new, new_len);
-            // jump after this word
+            strncpy(ret_p, new, new_len);=
             next_strstr = strstr(src, old);
+            // jump over this word
             src += old_len;
             ret_p += new_len;
         }
         // another char
         else
-        {
             *ret_p++ = *src++;
-        }
-    }
     
     *ret_p = '\0';
     return ret;
