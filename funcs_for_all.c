@@ -280,7 +280,7 @@ char *replace_str(const char *src, const char *old, const char *new)
         if (src == next_strstr)
         {
             // insert the new sub-string
-            strncpy(ret_p, new, new_len);=
+            strncpy(ret_p, new, new_len);
             next_strstr = strstr(src, old);
             // jump over this occurrence
             src += old_len;
