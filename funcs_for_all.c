@@ -282,7 +282,7 @@ char *replace_str(const char *src, const char *old, const char *new)
             // insert the new sub-string
             strncpy(ret_p, new, new_len);=
             next_strstr = strstr(src, old);
-            // jump over this word
+            // jump over this occurrence
             src += old_len;
             ret_p += new_len;
         }
