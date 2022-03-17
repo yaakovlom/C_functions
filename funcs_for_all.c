@@ -42,7 +42,9 @@ int my_strstr(char* str1, char* str2);
 char my_strpbrk(char* str, char* str2);
 size_t count_str_str(const char *src, const char *sub_str);
 char *replace_str(const char *src, const char *old, const char *new);
-
+char *capitalize(char *str);
+int str_endswith(const char *str, const char *sub_str);
+char *str_join(const char *joiner, char *strs[], size_t n_strs);
 
 
 // *** general ***
@@ -266,7 +268,7 @@ size_t count_str_str(const char *src, const char *sub_str)
 // Return a copy with all occurrences of substring old replaced by new
 char *replace_str(const char *src, const char *old, const char *new)
 {
-size_t src_len = strlen(src);
+	size_t src_len = strlen(src);
     size_t old_len = strlen(old);
     size_t new_len = strlen(new);
     size_t old_count = count_str_str(src, old);
@@ -293,5 +295,65 @@ size_t src_len = strlen(src);
             *ret_p++ = *src++;
     
     *ret_p = '\0';
+    return ret;
+}
+
+// make the first character have upper case and the rest lower case.
+char *capitalize(char *str)
+{
+    char *str_p = str;
+    *str_p = toupper(*str_p);
+    while (*++str_p)
+        *str_p = tolower(*str_p);
+    return str;
+}
+
+int str_endswith(const char *str, char const *sub_str)
+{
+    size_t str_len = strlen(str);
+    size_t sub_str_len = strlen(sub_str);
+
+    return strncmp(str + str_len - sub_str_len, sub_str, sub_str_len) == 0;
+}
+
+// Concatenate any number of strings with the joiner string in-betwin
+char *str_join(const char *joiner, char *strs[], size_t n_strs)
+{
+    if (n_strs < 2)
+        return strs[0];
+
+    size_t joiner_len = strlen(joiner);
+    size_t overall_len = 0;
+    size_t *strs_lens = (size_t *)malloc(n_strs * sizeof(size_t));
+    size_t i;
+    // overall length
+    for (i = 0; i < n_strs; i++)
+    {
+        strs_lens[i] = strlen(strs[i]);
+        overall_len += strs_lens[i];
+    }
+
+    char *ret = (char *)malloc((overall_len + joiner_len * (n_strs - 1)) * sizeof(char));
+    char *ret_p = ret;
+
+    // insert the first string
+    strncpy(ret_p, strs[0], strs_lens[0]);
+    // jump to the current end
+    ret_p += strs_lens[0];
+
+    for (size_t i = 1; i < n_strs; i++)
+    {
+        // insert the joiner to ret
+        strncpy(ret_p, joiner, joiner_len);
+        // jump to the current end
+        ret_p += joiner_len;
+        // insert the current string
+        strncpy(ret_p, strs[i], strs_lens[i]);
+        // jump to the current end
+        ret_p += strs_lens[i];
+    }
+    
+    *ret_p = '\0';
+    free(strs_lens);
     return ret;
 }
