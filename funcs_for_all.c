@@ -6,7 +6,6 @@
 
 // *** general ***
 void swap(int* a, int* b);
-void flush_all();
 
 // *** random ***
 void set_random_seed();
@@ -30,7 +29,7 @@ int is_digit(char cha);
 int is_space(char ch);
 
 // *** strings ***
-void remove_new_line(char* str);
+void after_gets(char* str);
 char* get_string(char* str, int len);
 int str_find_digit(char string[]);
 int str_count_ch(char string[], char ch);
@@ -54,12 +53,6 @@ void swap(int* a, int* b)
 	int temp = *a;
 	*a = *b;
 	*b = temp;
-}
-
-void flush_all()
-{
-	int ch = 0;
-	while ((ch = getchar()) != EOF && ch != '\n');
 }
 
 // *** random ***
@@ -162,10 +155,11 @@ int is_space(char ch)
 
 // *** strings ***
 
-void remove_new_line(char* str)
+void after_gets(char *str)
 {
-	char* end = str + my_strlen(str) - 1;
-	if (*end == '\n') *end = '\0';
+	int ch = 0;
+	if (str[strlen(str) - 1] == '\n') str[strlen(str) - 1] = '\0';
+	else while ((ch = getchar()) != '\n' && ch != EOF);
 }
 
 char* get_string(char* str, int len)
@@ -173,7 +167,7 @@ char* get_string(char* str, int len)
 	str = malloc((len + 1) * sizeof(char));
 	printf("Enter string <%d chars>: ", len);
 	fgets(str, len + 1, stdin);
-	remove_new_line(str);
+	after_gets(str);
 	return str;
 }
 
