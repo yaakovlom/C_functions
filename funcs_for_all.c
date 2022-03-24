@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #define N 5
 
-// *** general ***
+#define ADD_TO_STRING(str) #str
+
+//				*** general ***
 void swap(int* a, int* b);
 
-// *** random ***
+//				*** random ***
 void set_random_seed();
 void random_array(int* arr, int arr_len, int max);
 
-// *** arrays ***
+//				*** arrays ***
 void print_array(int* arr, int len);
 void print_matrix(int** arr, int rows, int columns);
 void copy_array(int dist[N][N], int src[N][N]);
@@ -20,20 +23,17 @@ int is_in_array(int arr[N][N], int row, int col);
 void spin_array_right(int arr[][N]);
 void spin_array_left(int arr[][N]);
 
-// *** bits ***
+//				*** bits ***
 int set_bit(int num, int bit);
 int check_bits(int num, int bits);
 
-// *** checks ***
-int is_digit(char cha);
-int is_space(char ch);
-
-// *** strings ***
+//				*** strings ***
+short int char_to_int(char ch);
 void after_gets(char* str);
-char* get_string(char* str, int len);
+char* get_string();
 int str_find_digit(char string[]);
 int str_count_ch(char string[], char ch);
-int my_strchr(char string[], char ch);
+char my_strchr(char string[], char ch);
 int my_strlen(char* str);
 int my_strcmp(char* str1, char* str2);
 int my_strncmp(char* str1, char* str2, int n);
@@ -45,9 +45,16 @@ char *capitalize(char *str);
 int str_endswith(const char *str, const char *sub_str);
 char *str_join(const char *joiner, char *strs[], size_t n_strs);
 
+	//			*** string checks ***
+	int is_digit(char cha);
+	int is_haigh_char(char cha);
+	int is_low_char(char cha);
+	int is_space(char ch);
 
-// *** general ***
 
+//           *** general ***
+
+// replace values of tow pointers.
 void swap(int* a, int* b)
 {
 	int temp = *a;
@@ -55,14 +62,16 @@ void swap(int* a, int* b)
 	*b = temp;
 }
 
-// *** random ***
+//				*** random ***
 
+// add the PCU time to random function (functions to add: <stdlib.h>)
 void set_random_seed()
 {
 	time_t t;
 	srand((unsigned)time(&t));
 }
 
+// fill array with random values
 void init_random_array(int* arr, int arr_len, int max)
 {
 	for (int i = 0; i < arr_len; i++)
@@ -70,8 +79,9 @@ void init_random_array(int* arr, int arr_len, int max)
 }
 
 
-// *** arrays ***
+//				*** arrays ***
 
+// print int array
 void print_array(int* arr, int len)
 {
 	for (int i = 0; i < len; i++)
@@ -79,12 +89,14 @@ void print_array(int* arr, int len)
 	printf("\n");
 }
 
+// print int matrix (functions to add: print_array)
 void print_matrix(int **arr, int row_len, int col_len)
 {
 	for (int i = 0; i < row_len; i++)
 		print_array(arr[i], col_len);
 }
 
+// copy array to the scened
 void copy_array(int dist[N][N], int src[N][N])
 {
 	for (int r = 0; r < N; r++)
@@ -92,6 +104,7 @@ void copy_array(int dist[N][N], int src[N][N])
 			dist[r][c] = src[r][c];
 }
 
+// add int into array in the right order (functions to add: swap)
 void put_in_order(int* arr, int len, int input)
 {
 	int end = len - 1;
@@ -101,6 +114,7 @@ void put_in_order(int* arr, int len, int input)
 	}
 }
 
+// check if the index is in the range
 int is_in_array(int arr[N][N], int row, int col)
 {
 	if ((row < 0 || row >= N) || (col < 0 || col >= N))
@@ -108,6 +122,7 @@ int is_in_array(int arr[N][N], int row, int col)
 	return 1;
 }
 
+// spin the array clockwise (functions to add: copy_array)
 void spin_array_right(int arr[][N])
 {
 	int _arr[N][N];
@@ -117,6 +132,7 @@ void spin_array_right(int arr[][N])
 	copy_array(arr, _arr);
 }
 
+// spin the array counterclockwise (functions to add: copy_array)
 void spin_array_left(int arr[][N])
 {
 	int _arr[N][N];
@@ -126,8 +142,9 @@ void spin_array_left(int arr[][N])
 	copy_array(arr, _arr);
 }
 
-// *** bits ***
+//				*** bits ***
 
+// change state of a single bit
 int set_bit(int num, int bit)
 {
 	int mask = 1;
@@ -136,25 +153,24 @@ int set_bit(int num, int bit)
 	return num;
 }
 
+// get state of a single bit
 int check_bits(int num, int bits)
 {
 	return (num & bits) == bits;
 }
 
-// *** checks ***
+//				*** strings ***
 
-int is_digit(char cha)
+#define CHUNK 10
+
+// convert a digit char to an int (functions to add: is_digit, <assert.h>)
+short int char_to_int(char ch)
 {
-	return (cha >= '0') && (cha <= '9');
+	assert(is_digit(ch));
+	return ch - '0';
 }
 
-int is_space(char ch)
-{
-	return (ch == '\t' || ch == ' ');
-}
-
-// *** strings ***
-
+// set the string and clean the STDIN
 void after_gets(char *str)
 {
 	int ch = 0;
@@ -162,15 +178,24 @@ void after_gets(char *str)
 	else while ((ch = getchar()) != '\n' && ch != EOF);
 }
 
-char* get_string(char* str, int len)
+// get non formating string
+char* get_string()
 {
-	str = malloc((len + 1) * sizeof(char));
-	printf("Enter string <%d chars>: ", len);
-	fgets(str, len + 1, stdin);
-	after_gets(str);
-	return str;
+	char* input = NULL;
+	char tempbuf[CHUNK];
+	int inputlen = 0, templen = 0;
+	do {
+		fgets(tempbuf, CHUNK, stdin);
+		templen = strlen(tempbuf);
+		input = realloc(input, inputlen + templen + 1);
+		strcpy(input + inputlen, tempbuf);
+		inputlen += templen;
+	} while (templen == CHUNK - 1 && tempbuf[CHUNK - 2] != '\n');
+		input[strlen(input) - 1] = '\0';
+		return input;
 }
 
+// find the first digit in the string
 int str_find_digit(char string[])
 {
 	int *p = string;
@@ -179,6 +204,7 @@ int str_find_digit(char string[])
 	return *string ? string : NULL;
 }
 
+// count the occurrences of the char in the string
 int str_count_ch(char string[], char ch)
 {
 	int count = 0;
@@ -191,7 +217,8 @@ int str_count_ch(char string[], char ch)
 	return count;
 }
 
-int my_strchr(char string[], char ch)
+// find the first occurrences of the char in the string
+char my_strchr(char string[], char ch)
 {
 	int* p = string;
 	while (*string && !(*string == ch))
@@ -199,6 +226,7 @@ int my_strchr(char string[], char ch)
 	return *string ? string : NULL;
 }
 
+// my strlen function
 int my_strlen(char* str)
 {
 	int count = 0;
@@ -207,12 +235,14 @@ int my_strlen(char* str)
 	return count;
 }
 
+// my strcmp function
 int my_strcmp(char* str1, char* str2)
 {
 	while (!(*str1 - *str2) && (*str1++ && *str2++));
 	return (*str1 - *str2 > 0) - (*str1 - *str2 < 0);
 }
 
+// my strncmp function
 int my_strncmp(char* str1, char* str2, int n)
 {
 	int cmp, count = 0;
@@ -221,6 +251,7 @@ int my_strncmp(char* str1, char* str2, int n)
 	return (cmp > 0) - (cmp < 0);
 }
 
+// my strstr function
 int my_strstr(char *str1, char *str2)
 {
 	int *find = str2;
@@ -234,6 +265,7 @@ int my_strstr(char *str1, char *str2)
 	return find == str2 ? NULL : str1;
 }
 
+// my strstr function
 char my_strpbrk(char* str, char* str2)
 {
 	for (int i = 0; i < strlen(str); i++)
@@ -351,3 +383,25 @@ char *str_join(const char *joiner, char *strs[], size_t n_strs)
     free(strs_lens);
     return ret;
 }
+
+	//			*** string checks ***
+
+	int is_digit(char cha)
+	{
+		return (cha >= '0') && (cha <= '9');
+	}
+
+	int is_haigh_char(char cha)
+	{
+		return (cha >= 'A') && (cha <= 'Z');
+	}
+
+	int is_low_char(char cha)
+	{
+		return (cha >= 'a') && (cha <= 'z');
+	}
+
+	int is_space(char ch)
+	{
+		return (ch == '\t' || ch == ' ');
+	}
