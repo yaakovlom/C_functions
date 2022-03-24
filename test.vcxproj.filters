@@ -18,5 +18,8 @@
     <ClCompile Include="funcs_for_all.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="structures_for_all.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
