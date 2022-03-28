@@ -3,53 +3,9 @@
 #include <stdlib.h>
 #include <assert.h>
 
+//#include "funcs_for_all.h"
+
 #define N 5
-
-#define ADD_TO_STRING(str) #str
-
-//				*** general ***
-void swap(int* a, int* b);
-
-//				*** random ***
-void set_random_seed();
-void random_array(int* arr, int arr_len, int max);
-
-//				*** arrays ***
-void print_array(int* arr, int len);
-void print_matrix(int** arr, int rows, int columns);
-void copy_array(int dist[N][N], int src[N][N]);
-void put_in_order(int* arr, int len, int input);
-int is_in_array(int arr[N][N], int row, int col);
-void spin_array_right(int arr[][N]);
-void spin_array_left(int arr[][N]);
-
-//				*** bits ***
-int set_bit(int num, int bit);
-int check_bits(int num, int bits);
-
-//				*** strings ***
-short int char_to_int(char ch);
-void after_gets(char* str);
-char* get_string();
-int str_find_digit(char string[]);
-int str_count_ch(char string[], char ch);
-char my_strchr(char string[], char ch);
-int my_strlen(char* str);
-int my_strcmp(char* str1, char* str2);
-int my_strncmp(char* str1, char* str2, int n);
-int my_strstr(char* str1, char* str2);
-char my_strpbrk(char* str, char* str2);
-size_t count_str_str(const char *src, const char *sub_str);
-char *replace_str(const char *src, const char *old, const char *new);
-char *capitalize(char *str);
-int str_endswith(const char *str, const char *sub_str);
-char *str_join(const char *joiner, char *strs[], size_t n_strs);
-
-	//			*** string checks ***
-	int is_digit(char cha);
-	int is_haigh_char(char cha);
-	int is_low_char(char cha);
-	int is_space(char ch);
 
 
 //           *** general ***
@@ -140,6 +96,52 @@ void spin_array_left(int arr[][N])
 		for (int c = 0; c < N; c++)
 			_arr[r][c] = arr[c][N - 1 - r];
 	copy_array(arr, _arr);
+}
+
+// compare columns of an int matrix
+int compare_columns(int arr[][N], int col1, int col2)
+{
+	for (int i = 0; i < N; i++)
+		if (arr[i][col1] != arr[i][col2])
+			return (arr[i][col1] < arr[i][col2]) - (arr[i][col1] > arr[i][col2]);// return 1 / -1
+	return 0;
+}
+
+// sort an int array (functions to add: swap)
+void sort_array(int arr[], int len)
+{
+	int c, * p;
+	for (c = 1; c < len; c++)
+	{
+		p = arr+c;
+		while (p > arr && *p < *(p - 1))
+		{
+			swap(p, (p - 1));
+			p--;
+		}
+	}
+}
+
+// sort column of int matrix (functions to add: swap)
+void sort_column(int arr[][N], int rows_len, int col)
+{
+	int i;
+	for (int r = 1; r < rows_len; r++)
+	{
+		i = r;
+		while (i > 0 && arr[i][col] < arr[i - 1][col])
+		{
+			swap(&arr[i][col], &arr[i - 1][col]);
+			i--;
+		}
+	}
+}
+
+// swap columns of a matrix
+void swap_columns(int arr[][N], int col1, int col2)
+{
+	for (int row = 0; row < N; row++)
+		swap(&arr[row][col1], &arr[row][col2]);
 }
 
 //				*** bits ***
@@ -300,6 +302,8 @@ char *replace_str(const char *src, const char *old, const char *new)
     size_t old_count = count_str_str(src, old);
 
     char *ret = (char *)malloc((src_len - ((old_len - new_len) * old_count) + 1) * sizeof(char));
+	if (!ret)
+		return NULL;
     char *ret_p = ret;
     char *next_strstr = strstr(src, old);
 
@@ -321,6 +325,7 @@ char *replace_str(const char *src, const char *old, const char *new)
             *ret_p++ = *src++;
     
     *ret_p = '\0';
+	free(src);
     return ret;
 }
 
@@ -351,6 +356,8 @@ char *str_join(const char *joiner, char *strs[], size_t n_strs)
     size_t joiner_len = strlen(joiner);
     size_t overall_len = 0;
     size_t *strs_lens = (size_t *)malloc(n_strs * sizeof(size_t));
+	if (!strs_lens)
+		return NULL;
     size_t i;
     // overall length
     for (i = 0; i < n_strs; i++)
@@ -360,6 +367,8 @@ char *str_join(const char *joiner, char *strs[], size_t n_strs)
     }
 
     char *ret = (char *)malloc((overall_len + joiner_len * (n_strs - 1)) * sizeof(char));
+	if (!ret)
+		return NULL;
     char *ret_p = ret;
 
     // insert the first string
