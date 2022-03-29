@@ -18,8 +18,15 @@
     <ClCompile Include="funcs_for_all.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="structures_for_all.c">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="funcs_for_all.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="input.txt">
       <Filter>Source Files</Filter>
-    </ClCompile>
+    </Text>
   </ItemGroup>
 </Project>

@@ -137,7 +137,7 @@ void sort_column(int arr[][N], int rows_len, int col)
 	}
 }
 
-// swap columns of a matrix
+// swap columns of a matrix (functions to add: swap)
 void swap_columns(int arr[][N], int col1, int col2)
 {
 	for (int row = 0; row < N; row++)
