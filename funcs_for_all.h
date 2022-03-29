@@ -40,7 +40,7 @@ int my_strncmp(char* str1, char* str2, int n);
 int my_strstr(char* str1, char* str2);
 char my_strpbrk(char* str, char* str2);
 size_t count_str_str(const char* src, const char* sub_str);
-char* replace_str(const char* src, const char* old, const char* new);
+char* replace_str(const char* src, const char* old, const char* );
 char* capitalize(char* str);
 int str_endswith(const char* str, const char* sub_str);
 char* str_join(const char* joiner, char* strs[], size_t n_strs);
@@ -62,10 +62,10 @@ enum  WeekDays {
 	Saturday
 };
 
-char* weekdays_names[] = { [Sunday] = "Sunday",[Monday] = "Monday",
-						[Tuesday] = "Tuesday",[Wednesday] = "Wednesday",
-						[Thursday] = "Thursday",[Friday] = "Friday",
-						[Saturday] = "Saturday" };
+//char* weekdays_names[] = { [Sunday] = "Sunday",[Monday] = "Monday",
+//						[Tuesday] = "Tuesday",[Wednesday] = "Wednesday",
+//						[Thursday] = "Thursday",[Friday] = "Friday",
+//						[Saturday] = "Saturday" };
 
 enum Months {
 	January = 1,
@@ -82,11 +82,11 @@ enum Months {
 	December
 };
 
-char* months_names[] = { [January] = "January",[February] = "February",
-						[March] = "March",[April] = "April",[May] = "May",
-						[June] = "June",[July] = "July",[August] = "August",
-						[September] = "September",[October] = "October",
-						[November] = "November",[December] = "December" };
+//char* months_names[] = { [January] = "January",[February] = "February",
+//						[March] = "March",[April] = "April",[May] = "May",
+//						[June] = "June",[July] = "July",[August] = "August",
+//						[September] = "September",[October] = "October",
+//						[November] = "November",[December] = "December" };
 
 enum Bool {
 	False,
